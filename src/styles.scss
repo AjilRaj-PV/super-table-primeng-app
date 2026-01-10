@@ -1,1 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
+/* PrimeNG & theme imports */
+@import 'primeflex/primeflex.css';
+@import 'primeicons/primeicons.css';
+
+:root{
+  --st-radius: 8px;
+}
+
+body{font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:0}
+

@@ -1,0 +1,72 @@
+/* Moved from inline styles in app.component.html */
+.playground {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.modes {
+  width: 220px;
+  border-right: 1px solid rgba(0, 0, 0, 0.06);
+  padding-right: 1rem;
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    padding: 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  li:hover {
+    background: rgba(0, 0, 0, 0.03);
+  }
+
+  .group-title {
+    padding: 0.5rem 0.5rem 0.25rem;
+    font-size: 0.92rem;
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .group-children {
+    list-style: none;
+    padding-left: 0.5rem;
+    margin: 0;
+
+    li {
+      padding: 0.35rem 0.5rem;
+      border-radius: 4px;
+      margin-left: 0.75rem;
+    }
+
+    li.active {
+      background: rgba(0, 0, 0, 0.06);
+    }
+  }
+
+  &.modes-list > li {
+    padding: 0.25rem 0.5rem;
+  }
+
+  li.active {
+    background: rgba(0, 0, 0, 0.06);
+    font-weight: 600;
+  }
+}
+
+.demo {
+  flex: 1;
+}
+
+.demo-area {
+  min-height: 320px;
+}
+
+.hint {
+  color: rgba(0, 0, 0, 0.5);
+  padding: 1rem;
+}
