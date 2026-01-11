@@ -1,4 +1,8 @@
-    :host ::ng-deep {
+    .super-table-main {
+        padding: 1rem;
+        box-shadow: 2px 6px 8px 0px #888888;
+        border-radius: 5px;
+
         .p-paginator {
             .p-paginator-current {
                 margin-left: auto;
@@ -38,11 +42,11 @@
                 padding: 1rem;
             }
 
-            .p-datatable-thead > tr > th {
+            .p-datatable-thead>tr>th {
                 text-align: left;
             }
 
-            .p-datatable-tbody > tr > td {
+            .p-datatable-tbody>tr>td {
                 cursor: auto;
             }
 
@@ -56,24 +60,25 @@
         }
 
         /* Responsive */
-        .p-datatable-customers .p-datatable-tbody > tr > td .p-column-title {
+        .p-datatable-customers .p-datatable-tbody>tr>td .p-column-title {
             display: none;
         }
     }
 
     @media screen and (max-width: 960px) {
-        :host ::ng-deep {
+        .super-table-main {
             .p-datatable {
                 &.p-datatable-customers {
-                    .p-datatable-thead > tr > th,
-                    .p-datatable-tfoot > tr > td {
+
+                    .p-datatable-thead>tr>th,
+                    .p-datatable-tfoot>tr>td {
                         display: none !important;
                     }
 
-                    .p-datatable-tbody > tr {
+                    .p-datatable-tbody>tr {
                         border-bottom: 1px solid var(--layer-2);
 
-                        > td {
+                        >td {
                             text-align: left;
                             width: 100%;
                             display: flex;

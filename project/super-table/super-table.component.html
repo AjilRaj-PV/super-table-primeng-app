@@ -1,134 +1,130 @@
-<ng-container *ngIf="config">
-
-    <p-contextMenu *ngIf="contextMenuEnabled" #cm [model]="contextMenuModel" (onHide)="selectedProduct = null"></p-contextMenu>
-
-<p-table #dt [styleClass]="resizeColumnsEnabled?'p-datatable-gridlines':''" dataKey="id" [editMode]="editMode"
-    [expandedRowKeys]="expandedRows" [value]="data" [paginator]="paginatorEnabled" [rows]="rows"
-    [rowsPerPageOptions]="rowsPerPageOptions" [sortMode]="sortMode" [scrollable]="scrollable"
-    [scrollHeight]="scrollHeight" [selectionMode]="selectionMode" [reorderableColumns]="reorderColumnsEnabled"
-    [resizableColumns]="resizeColumnsEnabled" (onPage)="page.emit($event)" (onSort)="sort.emit($event)"
-    (onFilter)="filter.emit($event)" 
-    (selectionChange)="selection.emit($event)" 
-    [(contextMenuSelection)]="selectedProduct"
-    [contextMenu]="contextMenuEnabled?cm:null" 
-    [(selection)]="selectedProducts"
-    [globalFilterFields]="['name', 'company', 'country', 'status']"
-    >
-     <ng-template pTemplate="caption" *ngIf="filterEnabled">
-        <div class="flex">
-            <p-iconfield iconPosition="left" class="ml-auto">
-                <p-inputicon>
-                    <i class="pi pi-search"></i>
-                </p-inputicon>
-                <input
-                    pInputText
-                    type="text"
-                    (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                    placeholder="Search keyword"
-                />
-            </p-iconfield>
-        </div>
-    </ng-template>
-    <ng-template #header>
-        <tr>
-            <th *ngIf="expandableEnabled || reorderColumnsEnabled"></th>
-            <ng-container *ngFor="let col of columns; let i = index">
-                <th *ngIf="resizeColumnsEnabled && !reorderColumnsEnabled" pResizableColumn>{{ col.header }}</th>
-                <th *ngIf="!resizeColumnsEnabled && reorderColumnsEnabled" pReorderableColumn>{{ col.header }}</th>
-                <th *ngIf="!resizeColumnsEnabled && !reorderColumnsEnabled && col.sortable" pSortableColumn="{{col?.field}}">{{ col.header }} 
-                    <p-sortIcon *ngIf="col.sortable" field="{{ col.field }}" />
-                </th>
-                <th *ngIf="!resizeColumnsEnabled && !reorderColumnsEnabled && !col.sortable">{{ col.header }}</th>
-               
-            </ng-container>
-        </tr>
-    </ng-template>
-
-    <ng-template #body let-row let-expanded="expanded" let-editing="editing" let-ri="rowIndex">
-        <tr [pEditableRow]="editMode == 'row'? row : null" [pReorderableRow]="ri"
-            [pContextMenuRow]="contextMenuEnabled ? row : null"
-            [pSelectableRow]="selectionModeEnabled ? row : null"
-            >
-            <td *ngIf="reorderColumnsEnabled">
-                <span class="pi pi-bars" pReorderableRowHandle></span>
-            </td>
-            <td *ngIf="expandableEnabled">
-                <p-button type="button" pRipple [pRowToggler]="row" [text]="true" [rounded]="true" [plain]="true"
-                    [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" />
-            </td>
-            <ng-container *ngFor="let col of columns; let i = index">
-                <td [pEditableColumn]="editMode === 'cell' ? row[col.field] : false"
-                    [pEditableColumnField]="editMode === 'cell' ? col.field : false">
-
-                    <ng-container *ngIf="isEditable; else readOnly">
-                        <p-cellEditor>
-                            <ng-template #input>
-                                <input pInputText [(ngModel)]="row[col.field]" />
-                            </ng-template>
-                            <ng-template #output>
-                                {{ row[col.field] }}
-                            </ng-template>
-                        </p-cellEditor>
-                    </ng-container>
-                    <ng-template #readOnly>
-                        <ng-container *ngIf="col.field == 'image'; else notImage">
-                            <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + row.image" [alt]="row.name"
-                                width="50" class="shadow-lg" />
-                        </ng-container>
-                        <ng-template #notImage>
-                            {{ row[col.field] }}
-                        </ng-template>
-                    </ng-template>
-                </td>
-            </ng-container>
-            <td *ngIf="isEditable && editMode === 'row'">
-                <div class="flex items-center justify-center gap-2">
-                    <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
-                        (click)="onRowEditInit(row)" text rounded severity="secondary"></button>
-                    <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
-                        (click)="onRowEditSave(row)" text rounded severity="secondary"></button>
-                    <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
-                        (click)="onRowEditCancel(row, ri)" text rounded severity="secondary"></button>
+<section class="super-table-main">
+    <ng-container *ngIf="config">
+    
+        <p-contextMenu *ngIf="contextMenuEnabled" #cm [model]="contextMenuModel"
+            (onHide)="selectedProduct = null"></p-contextMenu>
+    
+        <p-table #dt [styleClass]="resizeColumnsEnabled?'p-datatable-gridlines':''" dataKey="id" [editMode]="editMode"
+            [expandedRowKeys]="expandedRows" [value]="data" [paginator]="paginatorEnabled" [rows]="rows"
+            [rowsPerPageOptions]="rowsPerPageOptions" [sortMode]="sortMode" [scrollable]="scrollable"
+            [scrollHeight]="scrollHeight" [selectionMode]="selectionMode" [reorderableColumns]="reorderColumnsEnabled"
+            [resizableColumns]="resizeColumnsEnabled" (onPage)="page.emit($event)" (onSort)="sort.emit($event)"
+            (onFilter)="filter.emit($event)" (selectionChange)="selection.emit($event)"
+            [(contextMenuSelection)]="selectedProduct" [contextMenu]="contextMenuEnabled?cm:null"
+            [(selection)]="selectedProducts" [globalFilterFields]="['name', 'company', 'country', 'status']">
+            <ng-template pTemplate="caption" *ngIf="filterEnabled">
+                <div class="flex">
+                    <p-iconfield iconPosition="left" class="ml-auto">
+                        <p-inputicon>
+                            <i class="pi pi-search"></i>
+                        </p-inputicon>
+                        <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                            placeholder="Search keyword" />
+                    </p-iconfield>
                 </div>
-            </td>
+            </ng-template>
+            <ng-template #header>
+                <tr>
+                    <th *ngIf="expandableEnabled || reorderColumnsEnabled"></th>
+                    <ng-container *ngFor="let col of columns; let i = index">
+                        <th *ngIf="resizeColumnsEnabled && !reorderColumnsEnabled" pResizableColumn>{{ col.header }}</th>
+                        <th *ngIf="!resizeColumnsEnabled && reorderColumnsEnabled" pReorderableColumn>{{ col.header }}</th>
+                        <th *ngIf="!resizeColumnsEnabled && !reorderColumnsEnabled && col.sortable"
+                            pSortableColumn="{{col?.field}}">{{ col.header }}
+                            <p-sortIcon *ngIf="col.sortable" field="{{ col.field }}" />
+                        </th>
+                        <th *ngIf="!resizeColumnsEnabled && !reorderColumnsEnabled && !col.sortable">{{ col.header }}</th>
+    
+                    </ng-container>
+                </tr>
+            </ng-template>
+    
+            <ng-template #body let-row let-expanded="expanded" let-editing="editing" let-ri="rowIndex">
+                <tr [pEditableRow]="editMode == 'row'? row : null" [pReorderableRow]="ri"
+                    [pContextMenuRow]="contextMenuEnabled ? row : null"
+                    [pSelectableRow]="selectionModeEnabled ? row : null">
+                    <td *ngIf="reorderColumnsEnabled">
+                        <span class="pi pi-bars" pReorderableRowHandle></span>
+                    </td>
+                    <td *ngIf="expandableEnabled">
+                        <p-button type="button" pRipple [pRowToggler]="row" [text]="true" [rounded]="true" [plain]="true"
+                            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" />
+                    </td>
+                    <ng-container *ngFor="let col of columns; let i = index">
+                        <td [pEditableColumn]="editMode === 'cell' ? row[col.field] : false"
+                            [pEditableColumnField]="editMode === 'cell' ? col.field : false">
+    
+                            <ng-container *ngIf="isEditable; else readOnly">
+                                <p-cellEditor>
+                                    <ng-template #input>
+                                        <input pInputText [(ngModel)]="row[col.field]" />
+                                    </ng-template>
+                                    <ng-template #output>
+                                        {{ row[col.field] }}
+                                    </ng-template>
+                                </p-cellEditor>
+                            </ng-container>
+                            <ng-template #readOnly>
+                                <ng-container *ngIf="col.field == 'image'; else notImage">
+                                    <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + row.image"
+                                        [alt]="row.name" width="50" class="shadow-lg" />
+                                </ng-container>
+                                <ng-template #notImage>
+                                    {{ row[col.field] }}
+                                </ng-template>
+                            </ng-template>
+                        </td>
+                    </ng-container>
+                    <td *ngIf="isEditable && editMode === 'row'">
+                        <div class="flex items-center justify-center gap-2">
+                            <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
+                                (click)="onRowEditInit(row)" text rounded severity="secondary"></button>
+                            <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
+                                (click)="onRowEditSave(row)" text rounded severity="secondary"></button>
+                            <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
+                                (click)="onRowEditCancel(row, ri)" text rounded severity="secondary"></button>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template #expandedrow let-row *ngIf="expandableEnabled">
+                <tr>
+                    <td colspan="7">
+                        <div class="p-4">
+                            <h5>Orders for {{ row.name }}</h5>
+                            <p-table [value]="row.orders" dataKey="id">
+                                <ng-template #header>
+                <tr>
+                    <th pSortableColumn="id">Id <p-sortIcon field="price" /></th>
+                    <th pSortableColumn="customer">Customer <p-sortIcon field="customer" /></th>
+                    <th pSortableColumn="date">Date <p-sortIcon field="date" /></th>
+                    <th pSortableColumn="amount">Amount <p-sortIcon field="amount" /></th>
+                    <th pSortableColumn="status">Status <p-sortIcon field="status" /></th>
+                    <th style="width: 4rem"></th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-order>
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.customer }}</td>
+                    <td>{{ order.date }}</td>
+                    <td>{{ order.amount | currency : 'USD' }}</td>
+                    <td>
+                        <p-tag [value]="order.status" [severity]="getStatusSeverity(order.status)" />
+                    </td>
+                    <td><p-button type="button" icon="pi pi-search" /></td>
+                </tr>
+            </ng-template>
+            <ng-template #emptymessage>
+                <tr>
+                    <td colspan="6">There are no order for this product yet.</td>
+                </tr>
+            </ng-template>
+        </p-table>
+        </div>
+        </td>
         </tr>
-    </ng-template>
-    <ng-template #expandedrow let-row *ngIf="expandableEnabled">
-        <tr>
-            <td colspan="7">
-                <div class="p-4">
-                    <h5>Orders for {{ row.name }}</h5>
-                    <p-table [value]="row.orders" dataKey="id">
-                        <ng-template #header>
-        <tr>
-            <th pSortableColumn="id">Id <p-sortIcon field="price" /></th>
-            <th pSortableColumn="customer">Customer <p-sortIcon field="customer" /></th>
-            <th pSortableColumn="date">Date <p-sortIcon field="date" /></th>
-            <th pSortableColumn="amount">Amount <p-sortIcon field="amount" /></th>
-            <th pSortableColumn="status">Status <p-sortIcon field="status" /></th>
-            <th style="width: 4rem"></th>
-        </tr>
-    </ng-template>
-    <ng-template #body let-order>
-        <tr>
-            <td>{{ order.id }}</td>
-            <td>{{ order.customer }}</td>
-            <td>{{ order.date }}</td>
-            <td>{{ order.amount | currency : 'USD' }}</td>
-            <td>
-                <p-tag [value]="order.status" [severity]="getStatusSeverity(order.status)" />
-            </td>
-            <td><p-button type="button" icon="pi pi-search" /></td>
-        </tr>
-    </ng-template>
-    <ng-template #emptymessage>
-        <tr>
-            <td colspan="6">There are no order for this product yet.</td>
-        </tr>
-    </ng-template>
-</p-table>
-</div>
-</td>
-</tr>
-</ng-template>
-</p-table>
+        </ng-template>
+        </p-table>
+    </ng-container>
+</section>
